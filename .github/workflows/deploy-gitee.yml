@@ -1,0 +1,60 @@
+name: Build & Deploy to Gitee Pages
+
+# 触发条件：push 到 main 分支 或 手动在 Actions 页点 Run workflow
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: gitee-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies (cloud)
+        run: npm ci --no-audit --no-fund
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Deploy dist/ to Gitee repo (kuaila/kuaila, branch master)
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        run: |
+          cd dist
+          git init -q -b master
+          git config user.email "ci-bot@users.noreply.github.com"
+          git config user.name "ci-bot"
+          git add -A
+          git commit -q -m "deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push -f "https://kuaila:${GITEE_TOKEN}@gitee.com/kuaila/kuaila.git" master
+
+      - name: Enable Gitee Pages (idempotent, ignore if already on)
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        run: |
+          curl -s -X POST "https://gitee.com/api/v5/repos/kuaila/kuaila/pages" \
+            -H "Content-Type: application/json" \
+            -d "{\"access_token\":\"${GITEE_TOKEN}\",\"branch\":\"master\",\"build_directory\":\"/\",\"https\":true}" \
+            || true
+
+      - name: Trigger Gitee Pages rebuild
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        run: |
+          curl -s -X POST "https://gitee.com/api/v5/repos/kuaila/kuaila/pages/builds" \
+            -H "Content-Type: application/json" \
+            -d "{\"access_token\":\"${GITEE_TOKEN}\"}" \
+            | head -c 300
