@@ -1,4 +1,4 @@
-name: Build & Deploy to Gitee Pages
+name: Build & Deploy to GitHub Pages
 
 # 触发条件：push 到 main 分支 或 手动在 Actions 页点 Run workflow
 on:
@@ -6,9 +6,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
-  group: gitee-pages
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -29,32 +34,14 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Deploy dist/ to Gitee repo (kuaila/kuaila, branch master)
-        env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-        run: |
-          cd dist
-          git init -q -b master
-          git config user.email "ci-bot@users.noreply.github.com"
-          git config user.name "ci-bot"
-          git add -A
-          git commit -q -m "deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          git push -f "https://kuaila:${GITEE_TOKEN}@gitee.com/kuaila/kuaila.git" master
+      - name: Setup Pages (auto-create site if first run)
+        uses: actions/configure-pages@v5
 
-      - name: Enable Gitee Pages (idempotent, ignore if already on)
-        env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-        run: |
-          curl -s -X POST "https://gitee.com/api/v5/repos/kuaila/kuaila/pages" \
-            -H "Content-Type: application/json" \
-            -d "{\"access_token\":\"${GITEE_TOKEN}\",\"branch\":\"master\",\"build_directory\":\"/\",\"https\":true}" \
-            || true
+      - name: Upload artifact (dist/)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
 
-      - name: Trigger Gitee Pages rebuild
-        env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-        run: |
-          curl -s -X POST "https://gitee.com/api/v5/repos/kuaila/kuaila/pages/builds" \
-            -H "Content-Type: application/json" \
-            -d "{\"access_token\":\"${GITEE_TOKEN}\"}" \
-            | head -c 300
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
