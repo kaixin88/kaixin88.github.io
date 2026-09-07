@@ -2,11 +2,11 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://kuaila.gitee.io/",
+    url: "https://kaixin88.github.io/",
     title: "快乐小站",
     description: "菜谱 · 旅游 · 感想 · 技术 的私人笔记",
     author: "kuaile",
-    profile: "https://kuaila.gitee.io/",
+    profile: "https://kaixin88.github.io/",
     ogImage: "default-og.jpg",
     lang: "zh-CN",
     timezone: "Asia/Shanghai",
