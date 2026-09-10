@@ -29,11 +29,5 @@ export default defineAstroPaperConfig({
   },
   // 页脚社交区：暂不需要，留空数组即可（后续想加图标，往这里加一项）
   socials: [],
-  shareLinks: [
-    { name: "whatsapp", url: "https://wa.me/?text=" },
-    { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },
-    { name: "x", url: "https://x.com/intent/post?url=" },
-    { name: "telegram", url: "https://t.me/share/url?url=" },
-    { name: "mail", url: "mailto:?subject=See%20this%20post&body=" },
-  ],
+  shareLinks: [],
 });
