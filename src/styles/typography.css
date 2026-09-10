@@ -5,6 +5,11 @@
   .app-prose {
     @apply prose;
 
+    /* 楷体阅读优化：略大字号 + 更宽行距，中文长文更耐读 */
+    font-size: 1.0625rem;
+    line-height: 1.9;
+    letter-spacing: 0.01em;
+
     h1,
     h2,
     h3,
