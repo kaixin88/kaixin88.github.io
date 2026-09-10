@@ -13,29 +13,29 @@
     "AR PL UKai CN", "Songti SC", serif;
 }
 
-/* Light theme values */
+/* 宣纸暖调（浅色）：整站统一暖色，页面与文章区同色系，不再冷暖打架 */
 :root,
 [data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
+  --background: #faf7f1;
+  --foreground: #33312c;
+  --accent: #2f5d7c;
   --accent-foreground: #ffffff;
-  --muted: #e6e6e6;
-  --muted-foreground: #6b7280;
-  --border: #ece9e9;
-  /* 文章阅读区底色：米白纸感 */
-  --paper: #f7f4ea;
+  --muted: #eae3d4;
+  --muted-foreground: #7c7565;
+  --border: #e6ddcb;
+  /* 文章阅读区底色：比页面深一档的宣纸色 */
+  --paper: #f4eee0;
 }
 
-/* Dark theme values */
+/* 宣纸暖调（深色） */
 [data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --accent-foreground: #ffffff;
-  --muted: #343f60;
-  --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  --background: #23262b;
+  --foreground: #e7e2d6;
+  --accent: #7fa8c9;
+  --accent-foreground: #23262b;
+  --muted: #33383f;
+  --muted-foreground: #a09a8c;
+  --border: #3a4048;
   /* 文章阅读区底色：比页面略亮 */
-  --paper: #2a3247;
+  --paper: #2b3037;
 }

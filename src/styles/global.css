@@ -20,6 +20,19 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  /* 楷体笔画细、屏幕显示发灰，全站加粗后更清晰耐看 */
+  body {
+    font-weight: 600;
+  }
+  /* 代码保留等宽字体：楷体写代码会错位、符号难辨 */
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
+      "Liberation Mono", monospace;
+    font-weight: 400;
+  }
 }
 
 @utility max-w-app {
