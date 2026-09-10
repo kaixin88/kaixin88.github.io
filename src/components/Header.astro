@@ -144,22 +144,30 @@ const isActive = (path: string) => {
         }
         {
           features.search !== false && (
-            <li class="col-span-1 flex items-center justify-center">
-              <LinkButton
-                href={getRelativeLocaleUrl(locale, "search")}
-                class:list={["focus-outline relative size-8"]}
-                title={t.nav.search}
-                aria-label={t.nav.search}
+            <li class="col-span-2 flex items-center justify-center sm:ms-1">
+              <form
+                action={getRelativeLocaleUrl(locale, "search")}
+                method="get"
+                role="search"
+                class="flex w-full items-center gap-1 sm:w-auto"
               >
-                <IconSearch class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
-                <span class="sr-only">{t.nav.search}</span>
-                {isActive("/search") && (
-                  <IconUnderline
-                    aria-hidden="true"
-                    class="absolute bottom-0 w-6 scale-125 max-sm:inset-s-2"
-                  />
-                )}
-              </LinkButton>
+                <input
+                  type="search"
+                  name="q"
+                  placeholder="搜索文章…"
+                  aria-label={t.nav.search}
+                  class="focus-outline bg-background border-border placeholder:text-foreground/50 w-full min-w-0 rounded border px-2 py-1 text-sm sm:w-36 lg:w-44"
+                />
+                <button
+                  type="submit"
+                  class="focus-outline hover:text-accent flex size-8 shrink-0 items-center justify-center"
+                  title={t.nav.search}
+                  aria-label={t.nav.search}
+                >
+                  <IconSearch class="size-5" />
+                  <span class="sr-only">{t.nav.search}</span>
+                </button>
+              </form>
             </li>
           )
         }
