@@ -5,6 +5,7 @@ import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
+import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconX from "@/assets/icons/IconX.svg";
 import LinkButton from "./LinkButton.astro";
@@ -58,13 +59,13 @@ const isActive = (path: string) => {
   >
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="absolute -ms-2 py-1 text-2xl leading-8 font-bold tracking-wide whitespace-nowrap sm:static sm:-ms-3 sm:my-auto sm:me-6 sm:shrink-0 sm:text-3xl sm:leading-none"
     >
       {site.title}
     </a>
     <nav
       id="nav-menu"
-      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+      class="flex w-full flex-col items-center sm:ms-auto sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
     >
       <button
         id="menu-btn"
@@ -155,56 +156,81 @@ const isActive = (path: string) => {
             </li>
           )
         }
-        <li
-          class="col-span-2 flex items-center justify-center gap-2 sm:ms-1"
-          title="切换配色"
-        >
-          {
-            [
-              {
-                id: "xuanzhi",
-                label: "宣纸暖调",
-                bg: "#faf7f1",
-                accent: "#2f5d7c",
-              },
-              {
-                id: "zhuqing",
-                label: "竹青清雅",
-                bg: "#f6f8f5",
-                accent: "#4a7a5c",
-              },
-              {
-                id: "lenghui",
-                label: "冷灰现代",
-                bg: "#f7f8fa",
-                accent: "#3a6ea5",
-              },
-            ].map(scheme => (
-              <button
-                type="button"
-                class="scheme-btn focus-outline size-6 shrink-0 rounded-full border border-black/15 transition-transform hover:scale-110"
-                data-scheme={scheme.id}
-                title={scheme.label}
-                aria-label={`配色：${scheme.label}`}
-                aria-pressed="false"
-                style={`background:linear-gradient(135deg, ${scheme.bg} 0 50%, ${scheme.accent} 50% 100%);`}
-              />
-            ))
-          }
-        </li>
         {
           features.lightAndDarkMode && (
-            <li class="col-span-1 flex items-center justify-center">
+            <li class="col-span-2 relative flex items-center justify-center sm:ms-1">
               <button
                 id="theme-btn"
-                class="focus-outline hover:[&>svg]:stroke-accent relative size-12 p-4 sm:size-8"
-                title={t.a11y.toggleTheme}
-                aria-label="auto"
-                aria-live="polite"
+                class="focus-outline hover:text-accent relative flex size-12 items-center justify-center gap-0.5 p-4 sm:size-auto sm:gap-1 sm:p-0"
+                title="主题与配色"
+                aria-label="主题与配色"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="theme-panel"
               >
-                <IconMoon class="absolute top-[50%] left-[50%] translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                <IconSunHigh class="absolute top-[50%] left-[50%] translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                <IconMoon class="size-5 dark:hidden" />
+                <IconSunHigh class="hidden size-5 dark:block" />
+                <IconChevronLeft class="size-3 -rotate-90 opacity-60" />
               </button>
+
+              <div
+                id="theme-panel"
+                class="border-border bg-background absolute end-0 top-full z-50 mt-2 hidden w-44 rounded-md border py-1 shadow-lg"
+                role="menu"
+                aria-label="主题与配色"
+              >
+                <p class="text-muted-foreground px-3 py-1 text-sm">配色</p>
+                {
+                  [
+                    {
+                      id: "xuanzhi",
+                      label: "宣纸暖调",
+                      bg: "#faf7f1",
+                      accent: "#2f5d7c",
+                    },
+                    {
+                      id: "zhuqing",
+                      label: "竹青清雅",
+                      bg: "#f6f8f5",
+                      accent: "#4a7a5c",
+                    },
+                    {
+                      id: "lenghui",
+                      label: "冷灰现代",
+                      bg: "#f7f8fa",
+                      accent: "#3a6ea5",
+                    },
+                  ].map(scheme => (
+                    <button
+                      type="button"
+                      class="scheme-btn flex w-full items-center gap-2 px-3 py-2 text-left text-base hover:bg-muted"
+                      data-scheme={scheme.id}
+                      role="menuitemradio"
+                      aria-pressed="false"
+                    >
+                      <span
+                        class="size-4 shrink-0 rounded-full border border-black/20"
+                        style={`background:linear-gradient(135deg, ${scheme.bg} 0 50%, ${scheme.accent} 50% 100%);`}
+                      />
+                      <span>{scheme.label}</span>
+                      <span class="scheme-check text-accent ms-auto">✓</span>
+                    </button>
+                  ))
+                }
+                <div class="border-border my-1 border-t" />
+                <button
+                  type="button"
+                  id="dark-toggle"
+                  class="flex w-full items-center gap-2 px-3 py-2 text-left text-base hover:bg-muted"
+                  role="menuitemcheckbox"
+                  aria-checked="false"
+                >
+                  <IconMoon class="size-4 dark:hidden" />
+                  <IconSunHigh class="hidden size-4 dark:block" />
+                  <span class="dark:hidden">关灯</span>
+                  <span class="hidden dark:inline">开灯</span>
+                </button>
+              </div>
             </li>
           )
         }

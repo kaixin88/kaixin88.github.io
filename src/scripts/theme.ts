@@ -4,6 +4,9 @@ const LIGHT = "light";
 const DARK = "dark";
 const DEFAULT_SCHEME = "xuanzhi";
 
+// document 级监听是否已绑定（View Transitions 后 document 不变，避免重复叠加）
+let globalBound = false;
+
 function getPreferredTheme(): string {
   const stored = localStorage.getItem(THEME_KEY);
   if (stored) return stored;
@@ -33,15 +36,20 @@ function reflect(): void {
   root?.setAttribute("data-theme", themeValue);
   root?.setAttribute("data-scheme", schemeValue);
   root?.classList.toggle("dark", themeValue === DARK);
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  document
+    .querySelector("#theme-btn")
+    ?.setAttribute("aria-label", `主题与配色（当前：${schemeValue}）`);
 
-  // 高亮当前选中的配色按钮
+  // 下拉里当前生效的配色打勾，关灯项同步勾选状态
   document.querySelectorAll<HTMLButtonElement>(".scheme-btn").forEach(btn => {
     btn.setAttribute(
       "aria-pressed",
       btn.dataset.scheme === schemeValue ? "true" : "false"
     );
   });
+  document
+    .querySelector("#dark-toggle")
+    ?.setAttribute("aria-checked", themeValue === DARK ? "true" : "false");
 
   // Fill <meta name="theme-color"> with the computed background colour so
   // Android's browser chrome matches the page background.
@@ -54,19 +62,62 @@ function reflect(): void {
 function setup(): void {
   reflect();
 
-  // 关灯 / 开灯
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
-    persist();
+  const panel = document.querySelector<HTMLElement>("#theme-panel");
+  const themeBtn = document.querySelector<HTMLButtonElement>("#theme-btn");
+
+  const closePanel = () => {
+    if (!panel || !themeBtn) return;
+    panel.classList.add("hidden");
+    themeBtn.setAttribute("aria-expanded", "false");
+  };
+
+  // 顶栏一个按钮点开下拉面板
+  themeBtn?.addEventListener("click", e => {
+    if (!panel) return;
+    e.stopPropagation();
+    const willOpen = panel.classList.contains("hidden");
+    panel.classList.toggle("hidden", !willOpen);
+    themeBtn.setAttribute("aria-expanded", willOpen ? "true" : "false");
   });
 
-  // 三套配色切换
+  // 选配色
   document.querySelectorAll<HTMLButtonElement>(".scheme-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       schemeValue = btn.dataset.scheme ?? DEFAULT_SCHEME;
       persist();
+      closePanel();
     });
   });
+
+  // 关灯 / 开灯
+  document.querySelector("#dark-toggle")?.addEventListener("click", () => {
+    themeValue = themeValue === LIGHT ? DARK : LIGHT;
+    persist();
+    closePanel();
+  });
+
+  // 点空白处 / 按 Esc 关闭（document 级监听只绑一次，避免 View Transitions 后重复叠加）
+  if (!globalBound) {
+    globalBound = true;
+    document.addEventListener("click", e => {
+      const p = document.querySelector<HTMLElement>("#theme-panel");
+      const b = document.querySelector<HTMLButtonElement>("#theme-btn");
+      if (!p || p.classList.contains("hidden")) return;
+      const target = e.target as Node;
+      if (!p.contains(target) && !b?.contains(target)) {
+        p.classList.add("hidden");
+        b?.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key !== "Escape") return;
+      const p = document.querySelector<HTMLElement>("#theme-panel");
+      p?.classList.add("hidden");
+      document
+        .querySelector("#theme-btn")
+        ?.setAttribute("aria-expanded", "false");
+    });
+  }
 }
 
 setup();
