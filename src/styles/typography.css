@@ -15,7 +15,7 @@
     h3,
     h4,
     th {
-      @apply text-foreground mb-3;
+      @apply text-foreground mb-3 font-bold;
     }
 
     h3 {
@@ -30,6 +30,12 @@
     table,
     code {
       @apply text-foreground;
+    }
+
+    /* 正文已全局 600，正文内的强调与标题要更重才分得出来 */
+    strong,
+    b {
+      @apply font-extrabold;
     }
 
     a {
