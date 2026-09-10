@@ -106,8 +106,8 @@ const rssHref = getRelativeLocaleUrl(
           "(prefers-color-scheme: dark)"
         ).matches;
         const theme = stored ?? (prefersDark ? "dark" : "light");
-        // 配色方案：宣纸暖调 / 竹青清雅 / 冷灰现代
-        const scheme = localStorage.getItem("scheme") || "xuanzhi";
+        // 配色方案：宣纸暖调 / 竹青清雅 / 冷灰现代（默认竹青清雅）
+        const scheme = localStorage.getItem("scheme") || "zhuqing";
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.setAttribute("data-scheme", scheme);

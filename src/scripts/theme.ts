@@ -2,7 +2,7 @@ const THEME_KEY = "theme";
 const SCHEME_KEY = "scheme";
 const LIGHT = "light";
 const DARK = "dark";
-const DEFAULT_SCHEME = "xuanzhi";
+const DEFAULT_SCHEME = "zhuqing"; // 默认配色：竹青清雅
 
 // document 级监听是否已绑定（View Transitions 后 document 不变，避免重复叠加）
 let globalBound = false;

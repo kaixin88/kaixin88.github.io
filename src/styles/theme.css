@@ -18,9 +18,7 @@
    每套都配了「浅色 / 深色（关灯）」两版
    ============================================================ */
 
-/* ---------- 默认：宣纸暖调（浅色） ---------- */
-:root,
-[data-theme="light"],
+/* ---------- 宣纸暖调（浅色） ---------- */
 [data-theme="light"][data-scheme="xuanzhi"] {
   --background: #faf7f1;
   --foreground: #33312c;
@@ -33,7 +31,6 @@
 }
 
 /* ---------- 宣纸暖调（深色） ---------- */
-[data-theme="dark"],
 [data-theme="dark"][data-scheme="xuanzhi"] {
   --background: #23262b;
   --foreground: #e7e2d6;
@@ -45,7 +42,9 @@
   --paper: #2b3037;
 }
 
-/* ---------- 竹青清雅（浅色）---------- */
+/* ---------- 竹青清雅（浅色，默认方案）---------- */
+:root,
+[data-theme="light"],
 [data-theme="light"][data-scheme="zhuqing"] {
   --background: #f6f8f5;
   --foreground: #2b332d;
@@ -57,7 +56,8 @@
   --paper: #eaf0e9;
 }
 
-/* ---------- 竹青清雅（深色）---------- */
+/* ---------- 竹青清雅（深色，默认方案）---------- */
+[data-theme="dark"],
 [data-theme="dark"][data-scheme="zhuqing"] {
   --background: #1f2621;
   --foreground: #dfe7df;
