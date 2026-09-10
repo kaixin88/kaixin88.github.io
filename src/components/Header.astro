@@ -80,16 +80,8 @@ const isActive = (path: string) => {
       </button>
       <ul
         id="menu-items"
-        class="[&>li>a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-4 sm:flex-wrap sm:justify-end sm:gap-y-1 sm:[&>li]:h-8 [&>li>a]:block [&>li>a]:whitespace-nowrap [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium sm:[&>li>a]:px-1.5 sm:[&>li>a]:py-1"
+        class="[&>li>a]:hover:text-accent mt-4 hidden w-44 grid-cols-2 place-content-center gap-2 sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:flex-wrap sm:justify-end sm:gap-y-1 sm:[&>li]:h-10 [&>li>a]:block [&>li>a]:whitespace-nowrap [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:text-lg [&>li>a]:font-semibold sm:[&>li>a]:px-1.5 sm:[&>li>a]:py-1 sm:[&>li>a]:text-xl"
       >
-        <li class="col-span-2">
-          <a
-            href={getRelativeLocaleUrl(locale, "posts")}
-            class:list={{ "active-nav": isActive("/posts") }}
-          >
-            {t.nav.posts}
-          </a>
-        </li>
         {
           categories.map(({ name, slug }) => (
             <li class="col-span-2">
@@ -108,14 +100,6 @@ const isActive = (path: string) => {
             class:list={{ "active-nav": isActive("/tags") }}
           >
             {t.nav.tags}
-          </a>
-        </li>
-        <li class="col-span-2">
-          <a
-            href={getRelativeLocaleUrl(locale, "about")}
-            class:list={{ "active-nav": isActive("/about") }}
-          >
-            {t.nav.about}
           </a>
         </li>
         {
@@ -171,6 +155,43 @@ const isActive = (path: string) => {
             </li>
           )
         }
+        <li
+          class="col-span-2 flex items-center justify-center gap-2 sm:ms-1"
+          title="切换配色"
+        >
+          {
+            [
+              {
+                id: "xuanzhi",
+                label: "宣纸暖调",
+                bg: "#faf7f1",
+                accent: "#2f5d7c",
+              },
+              {
+                id: "zhuqing",
+                label: "竹青清雅",
+                bg: "#f6f8f5",
+                accent: "#4a7a5c",
+              },
+              {
+                id: "lenghui",
+                label: "冷灰现代",
+                bg: "#f7f8fa",
+                accent: "#3a6ea5",
+              },
+            ].map(scheme => (
+              <button
+                type="button"
+                class="scheme-btn focus-outline size-6 shrink-0 rounded-full border border-black/15 transition-transform hover:scale-110"
+                data-scheme={scheme.id}
+                title={scheme.label}
+                aria-label={`配色：${scheme.label}`}
+                aria-pressed="false"
+                style={`background:linear-gradient(135deg, ${scheme.bg} 0 50%, ${scheme.accent} 50% 100%);`}
+              />
+            ))
+          }
+        </li>
         {
           features.lightAndDarkMode && (
             <li class="col-span-1 flex items-center justify-center">

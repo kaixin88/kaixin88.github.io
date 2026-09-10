@@ -35,6 +35,14 @@
   }
 }
 
+/* 配色方案按钮：当前生效的那套加一圈描边 */
+.scheme-btn[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px var(--color-background),
+    0 0 0 4px var(--color-accent);
+  transform: scale(1.08);
+}
+
 @utility max-w-app {
   @apply max-w-3xl;
 }

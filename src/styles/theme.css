@@ -13,22 +13,28 @@
     "AR PL UKai CN", "Songti SC", serif;
 }
 
-/* 宣纸暖调（浅色）：整站统一暖色，页面与文章区同色系，不再冷暖打架 */
+/* ============================================================
+   三套配色方案，由 <html data-scheme="..."> 切换
+   每套都配了「浅色 / 深色（关灯）」两版
+   ============================================================ */
+
+/* ---------- 默认：宣纸暖调（浅色） ---------- */
 :root,
-[data-theme="light"] {
+[data-theme="light"],
+[data-theme="light"][data-scheme="xuanzhi"] {
   --background: #faf7f1;
   --foreground: #33312c;
-  --accent: #2f5d7c;
+  --accent: #2f5d7c; /* 黛蓝 */
   --accent-foreground: #ffffff;
   --muted: #eae3d4;
   --muted-foreground: #7c7565;
   --border: #e6ddcb;
-  /* 文章阅读区底色：比页面深一档的宣纸色 */
-  --paper: #f4eee0;
+  --paper: #f4eee0; /* 文章阅读区：比页面深一档的宣纸色 */
 }
 
-/* 宣纸暖调（深色） */
-[data-theme="dark"] {
+/* ---------- 宣纸暖调（深色） ---------- */
+[data-theme="dark"],
+[data-theme="dark"][data-scheme="xuanzhi"] {
   --background: #23262b;
   --foreground: #e7e2d6;
   --accent: #7fa8c9;
@@ -36,6 +42,53 @@
   --muted: #33383f;
   --muted-foreground: #a09a8c;
   --border: #3a4048;
-  /* 文章阅读区底色：比页面略亮 */
   --paper: #2b3037;
+}
+
+/* ---------- 竹青清雅（浅色）---------- */
+[data-theme="light"][data-scheme="zhuqing"] {
+  --background: #f6f8f5;
+  --foreground: #2b332d;
+  --accent: #4a7a5c; /* 竹青 */
+  --accent-foreground: #ffffff;
+  --muted: #e4ebe4;
+  --muted-foreground: #6e7a70;
+  --border: #d7e2d8;
+  --paper: #eaf0e9;
+}
+
+/* ---------- 竹青清雅（深色）---------- */
+[data-theme="dark"][data-scheme="zhuqing"] {
+  --background: #1f2621;
+  --foreground: #dfe7df;
+  --accent: #7fb894;
+  --accent-foreground: #1f2621;
+  --muted: #2c352e;
+  --muted-foreground: #99a79c;
+  --border: #354036;
+  --paper: #28302a;
+}
+
+/* ---------- 冷灰现代（浅色）---------- */
+[data-theme="light"][data-scheme="lenghui"] {
+  --background: #f7f8fa;
+  --foreground: #2b2f36;
+  --accent: #3a6ea5; /* 靛蓝 */
+  --accent-foreground: #ffffff;
+  --muted: #e8eaee;
+  --muted-foreground: #6b7280;
+  --border: #dfe2e8;
+  --paper: #ffffff;
+}
+
+/* ---------- 冷灰现代（深色）---------- */
+[data-theme="dark"][data-scheme="lenghui"] {
+  --background: #1e2127;
+  --foreground: #e3e6ec;
+  --accent: #7aa7d9;
+  --accent-foreground: #1e2127;
+  --muted: #2a2e36;
+  --muted-foreground: #9aa1ad;
+  --border: #363b45;
+  --paper: #262a32;
 }
