@@ -3,7 +3,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://kaixin88.github.io/",
-    title: "快乐小站",
+    title: "小站",
     description: "菜谱 · 旅游 · 感想 · 技术 的私人笔记",
     author: "kuaile",
     profile: "https://kaixin88.github.io/",
@@ -20,17 +20,15 @@ export default defineAstroPaperConfig({
   features: {
     lightAndDarkMode: true,
     dynamicOgImage: true,
-    showArchives: true,
+    showArchives: false,
     showBackButton: true,
     editPost: {
       enabled: false,
     },
     search: "pagefind",
   },
-  socials: [
-    { name: "github", url: "https://gitee.com/kuaila" },
-    { name: "mail", url: "mailto:kuaila@gitee.io" },
-  ],
+  // 页脚社交区：暂不需要，留空数组即可（后续想加图标，往这里加一项）
+  socials: [],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },
     { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },
